@@ -3,17 +3,35 @@ import os
 
 app = Flask(__name__)
 # Для общего сайта нужен хост 0.0.0.0
-
+# regards = {'1': 'Молодец', '2': 'Хороший', '3': 'Добрый'}
+# return render_template('hello.html', user=name, dict=regards)
 @app.route('/')
-def hello():
-    name = None
+def start():
+    return render_template('hello.html')
+
+
+@app.route('/index')
+def index():
+    return render_template('index_test.html', test=path)
+
+
+@app.route('/hello/<name>/<int:user_id>')
+def hello(name, user_id):
+    # name = 'Tera'
     regards = {'1': 'Молодец', '2': 'Хороший', '3': 'Добрый'}
-    return render_template('hello.html', user=name, dict=regards)
+    return render_template('hello.html', user=name, dict=regards, user_id=user_id)
 
 
 @app.route('/dir')
 def dirf():
     return '<br>'.join(os.listdir())
+
+
+with app.test_request_context():
+    print(url_for('index'))
+    print(url_for('dirf'))
+    path = url_for('hello', name='Tema', user_id=102, category='staff', _external=True)
+    print(url_for('hello', name='Tema', user_id=102, category='staff', _external=True))
 
 
 if __name__ == '__main__':
